@@ -11,7 +11,25 @@
 - **模型管理**：支持动态切换 SoVITS/GPT 模型
 
 ## 🚀 快速开始
+### 环境安装
+1. **安装GPT-SoVITS v3**：
+   - 克隆官方仓库：`git clone https://github.com/RVC-Boss/GPT-SoVITS.git`
+   - 安装依赖：`pip install -r requirements.txt`
+   - 详细步骤请参考 [官方文档](https://github.com/RVC-Boss/GPT-SoVITS)
 
+2. **准备训练数据**：
+   - 具体数据准备要求请参考官方文档或网络教程
+
+3. **训练模型**：
+   - 训练方法请查阅相关教程：[GPT-SoVITS官方文档](https://github.com/RVC-Boss/GPT-SoVITS)
+
+4. **启动推理服务**：
+   - 确保推理服务正常运行并监听`http://localhost:9872`
+
+5. **安装插件**：
+   - 将插件放入Langbot的`plugins/`目录
+   - 重启Langbot服务
+   - 使用`!gsl 状态`验证插件是否加载成功
 
 ### 基本使用
 1. 发送消息自动触发语音合成
