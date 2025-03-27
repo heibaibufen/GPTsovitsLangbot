@@ -1,12 +1,14 @@
-from pprint import pprint
+import os
+import aiofiles
 from gradio_client import Client, file
+from pathlib import Path
 
 url = "http://localhost:9872/"
 
 
 def tts(ref_wav_path,
-        prompt_text, prompt_language, text,
-        text_language, ):
+              prompt_text, prompt_language, text,
+              text_language, ):
     client = Client(url)
     result = client.predict(
         ref_wav_path=ref_wav_path,
@@ -25,7 +27,7 @@ def tts(ref_wav_path,
         sample_steps=32,
         api_name="/get_tts_wav"
     )
-    pprint(result)
+    print(result)
     return result
 
 
@@ -37,7 +39,6 @@ def change_sovits_weights(sovits_path):
         text_language="中文",
         api_name="/change_sovits_weights"
     )
-    pprint(result)
 
 
 def change_gpt_weights(gpt_path):
@@ -46,18 +47,14 @@ def change_gpt_weights(gpt_path):
         gpt_path=gpt_path,
         api_name="/change_gpt_weights"
     )
-    pprint(result)
 
 
-def change_choices():
+def get_model_list():
+    """获取可用模型列表并缓存"""
     client = Client(url)
-    result = client.predict(
-        api_name="/change_choices"
-    )
-    choices_vits = []
-    choices_gpt = []
-    for i in result[0]["choices"]:
-        choices_vits.append(i[0])
-    for i in result[1]["choices"]:
-        choices_gpt.append(i[0])
-    return choices_vits, choices_gpt
+    result = client.predict(api_name="/change_choices")
+    return {
+        "sovits": [choice[0] for choice in result[0]["choices"]],
+        "gpt": [choice[0] for choice in result[1]["choices"]]
+    }
+
